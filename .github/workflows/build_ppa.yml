@@ -17,6 +17,8 @@ jobs:
       - name: Build PPA
         run: |
           ./make_ppa.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish artifact
         uses: actions/upload-pages-artifact@v3
