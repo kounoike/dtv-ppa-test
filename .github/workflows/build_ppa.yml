@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  build-ppa:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: import gpg key
+        run: |
+          echo "$GPG_PRIVATE_KEY" | base64 --decode | gpg --import
+
+      - name: Build PPA
+        run: |
+          ./make_ppa.sh
+
+      - name: Publish artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build-ppa
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy pages
+        uses: actions/deploy-pages@v4
