@@ -49,5 +49,5 @@ get_debreleases kazuki0824/recisdb-rs
 # tsukumijima/px4_drv
 get_debreleases tsukumijima/px4_drv
 
-# 
-
+# build ppa repository
+make_ppa
